@@ -22,6 +22,8 @@ setup(
         'console_scripts': [
             'swarm_controller = swarm_controller.control_single_drone:main',
             'ros_timer = swarm_controller.interval_rclpy',
+            'sensor = swarm_controller.sensor:main',
+            'main = swarm_controller.controller'
         ],
     },
 )

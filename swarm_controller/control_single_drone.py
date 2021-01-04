@@ -10,6 +10,17 @@ import threading
 
 satuan = 0.05
 
+# Commands
+TAKEOFF = "takeoff"
+LAND = "land"
+def move(vx, vy, vz, yaw):
+    print('vx: ', vx)
+    print('vy: ', vy)
+    print('vz: ', vz)
+    print('yaw: ', yaw)
+
+    return ("rc %d %d %d %d" % (vx, vy, vz, yaw))
+
 class MinimalClientAsync(Node):
 
     def __init__(self):
@@ -20,7 +31,7 @@ class MinimalClientAsync(Node):
         self.req = TelloAction.Request()
 
     def send_request(self):
-        self.req.cmd = "rc 0.1 0.1 0 0.5    "
+        self.req.cmd = move(0.1, 0.1, 0, 0.5)
         self.future = self.cli.call_async(self.req)
 
 
@@ -32,17 +43,17 @@ def main(args=None):
     minimal_client.send_request()
 
     # Timer
-    timer = rclpy.create_node('timer')
+    # timer = rclpy.create_node('timer')
     ## Spin in a separate thread
-    thread = threading.Thread(target=rclpy.spin, args=(timer, ), daemon=True)
-    thread.start()
+    # thread = threading.Thread(target=rclpy.spin, args=(timer, ), daemon=True)
+    # thread.start()
 
     # rate = timer.create_rate(0.5) #Hz
 
     try:
         while rclpy.ok():
             # Timer
-            print('Help me body, you are my only hope')
+            # print('Help me body, you are my only hope')
             # rate.sleep()
             
             # Service
@@ -61,7 +72,7 @@ def main(args=None):
 
     minimal_client.destroy_node()
     rclpy.shutdown()
-    thread.join()
+    # thread.join()
 
 
 if __name__ == '__main__':
